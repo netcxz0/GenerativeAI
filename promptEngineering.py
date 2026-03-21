@@ -3,16 +3,27 @@
 from utils.llm_utils import llm_model
 
 params = {
-    "max_new_tokens": 128,
-    "min_new_tokens": 10,
-    "temperature": 0.5,
-    "top_p": 0.2,
-    "top_k": 1
+    "max_new_tokens": 128, # Try 256 or 512 for more detailed answers
+    "min_new_tokens": 30, # Increase to 25-50 if you want more substantial answers
+    "temperature": 0.5, # Controls randomness in generation (0.0-1.0)
+                       # Lower (0.1-0.3): More focused, consistent, factual responses
+                      # Higher (0.7-1.0): More creative, diverse, unpredictable outputs
+    "top_p": 0.2, # Nucleus sampling - considers only highest probability tokens
+                       # Lower values (0.1-0.3): More conservative, focused text
+                       # Higher values (0.7-0.9): More diverse vocabulary and ideas
+    "top_k": 1 # Limits token selection to top k most likely tokens
+                       # 1 = greedy decoding (always picks most likely token)
+                       # Try 40-50 for more varied outputs
 }
 
-prompt = "The benefits of sustainable energy include"
+# Compare responses to different prompts
+prompts = [
+    "The future of artificial intelligence is",
+    "Once upon a time in a distant galaxy",
+    "The benefits of sustainable energy include"
+]
 
-# Getting a reponse from the model with the provided prompt and new parameters
-response = llm_model(prompt, params)
-print(f"prompt: {prompt}\n")
-print(f"response : {response}\n")
+for prompt in prompts:
+    response = llm_model(prompt, params)
+    print(f"prompt: {prompt}\n")
+    print(f"response : {response}\n")
