@@ -10,8 +10,8 @@ from langchain_ibm import WatsonxLLM
 # from langchain_core.messages import HumanMessage, SystemMessage
 # from langchain.chains import LLMChain  # Still using this for backward compatibility
 
-def llm_model(prompt_txt, params=None):
-    model_id = "ibm/granite-3-3-8b-instruct"
+def llm_model(model_id, params=None):
+    model_id = model_id
     default_params = {
         "max_new_tokens": 256,
         "min_new_tokens": 0,
@@ -29,10 +29,9 @@ def llm_model(prompt_txt, params=None):
     granite_llm = WatsonxLLM(
         model_id=model_id,
         url=os.environ.get("WATSONX_URL"),
-        apikey=os.environ.get("WATSONX+APIKEY"),
+        apikey=os.environ.get("WATSONX_APIKEY"),
         project_id=project_id,
         params=default_params
     )
 
-    response = granite_llm.invoke(prompt_txt)
-    return response
+    return granite_llm
